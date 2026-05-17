@@ -1,0 +1,15 @@
+# Dependencies for the figure-generation scripts (Stage 2 of the pipeline).
+#
+# The notebooks (Stage 1, data generation) pip-install their own deps
+# inside the notebook because they are run in fresh Colab / GPU environments.
+# This file is the lighter, post-processing-only set needed to regenerate
+# the six paper figures from results/modern_panel/.
+#
+# Tested on Python 3.10. Minor version drift is fine.
+
+numpy>=1.26
+pandas>=2.0
+pyarrow>=14.0
+matplotlib>=3.7
+scipy>=1.10
+statsmodels>=0.14    # for the OLS-quadratic refit when needed
