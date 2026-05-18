@@ -4,8 +4,6 @@ A Two-Probe Diagnostic for Repetition in Language Models.
 
 This repository contains the code and reproduction data package for the paper.
 
-> Preprint accompanying the code+data release. The manuscript and LaTeX source are not included here.
-
 ---
 
 ## Layout
