@@ -4,7 +4,7 @@ A Two-Probe Diagnostic for Repetition in Language Models.
 
 This repository contains the code and reproduction data package for the paper.
 
-> **Status: anonymous review in progress.** This repository is shared via an anonymization service for ARR / EMNLP review. The manuscript and LaTeX source are not included here.
+> Preprint accompanying the code+data release. The manuscript and LaTeX source are not included here.
 
 ---
 
@@ -102,15 +102,17 @@ Python 3.11 tested; `transformers`, `accelerate`, `safetensors`, `transformer-le
 ## Citation
 
 ```bibtex
-@misc{anonymous2026whenmore,
-  title  = {When More Becomes Less: A Two-Probe Diagnostic for Repetition in Language Models},
-  author = {Anonymous},
-  year   = {2026},
-  note   = {Under review at EMNLP 2026 (ARR May cycle)},
+@article{wang2026whenmore,
+  title         = {When More Becomes Less: A Two-Probe Diagnostic for Repetition in Language Models},
+  author        = {Wang, Han-yu},
+  year          = {2026},
+  eprint        = {XXXX.XXXXX},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CL},
 }
 ```
 
-This entry will be updated once the paper is accepted.
+`eprint` will be filled in once the arXiv preprint is live.
 
 ---
 
