@@ -35,12 +35,13 @@ This repository contains the code and reproduction data package for the paper.
     │   ├── targets/
     │   ├── displaced/
     │   └── summary/
-    └── figures/               (five paper figures — 4 regenerated + 1 static)
-        ├── fig1_probe_schematic.{pdf,svg,png}    (static, hand-authored)
+    └── figures/               (six paper figures — 5 regenerated + 1 static)
+        ├── fig1_probe_schematic.{pdf,svg}              (static, hand-authored)
         ├── fig2_main_curves.{pdf,png}
-        ├── fig3_ablation.{pdf,png}
-        ├── fig4_mechanism.{pdf,png}
-        └── fig_layerwise_mechanism.{pdf,png}
+        ├── fig3_crosslingual.{pdf,png}
+        ├── fig4_ablation.{pdf,png}
+        ├── fig5_mechanism.{pdf,png}
+        └── fig6_layerwise.{pdf,png}
 ```
 
 ---
