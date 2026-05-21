@@ -97,23 +97,6 @@ Python 3.11 tested; `transformers`, `accelerate`, `safetensors`, `transformer-le
 
 ---
 
-## Citation
-
-```bibtex
-@article{wang2026whenmore,
-  title         = {When More Becomes Less: A Two-Probe Diagnostic for Repetition in Language Models},
-  author        = {Wang, Han-yu},
-  year          = {2026},
-  eprint        = {XXXX.XXXXX},
-  archivePrefix = {arXiv},
-  primaryClass  = {cs.CL},
-}
-```
-
-`eprint` will be filled in once the arXiv preprint is live.
-
----
-
 ## License
 
 [MIT](LICENSE) — see the LICENSE file for the full text.
