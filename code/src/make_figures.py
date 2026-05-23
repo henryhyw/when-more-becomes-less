@@ -11,6 +11,7 @@ Reads experimental outputs from `data/english_panel/` and
     fig4_ablation        — six-condition causal ablation
     fig5_mechanism       — per-target-token attention / block budget / slot-state
     fig6_layerwise       — per-layer attention vs 1/N reference (appendix)
+    fig7_framepragm      — frame-pragmatics ablation (appendix)
 
 Figure 1 (the two-probe-design schematic) is a hand-authored static asset
 shipped as `data/figures/fig1_probe_schematic.{pdf,svg}` and is NOT
@@ -539,6 +540,47 @@ def fig6_layerwise():
     print(f"  fig6 → {FIGS / 'fig6_layerwise.png'}")
 
 
+def fig7_framepragm():
+    fp_files = sorted((DATA / "frame_pragmatics").glob("frame_pragmatics__*.parquet"))
+    if not fp_files:
+        print("  no frame_pragmatics files; skipping fig7"); return
+    fp = pd.concat([pd.read_parquet(f) for f in fp_files], ignore_index=True)
+    classes = ["ORIG", "NEUTRAL", "ANAPHORIC", "NOVELTY"]
+    labels = {"ORIG": "Topic-introducer (F0,F2)", "NEUTRAL": "Neutral / existential",
+              "ANAPHORIC": "Anaphoric (demands repeat)", "NOVELTY": "Novelty (demands new word)"}
+    colors = {"ORIG": "#1f77b4", "NEUTRAL": "#ff7f0e", "ANAPHORIC": "#2ca02c", "NOVELTY": "#d62728"}
+    models = [(m, s) for (m, s, fam, c) in MECH_MODELS if m in fp["model"].unique()]
+    fig, axes = plt.subplots(1, len(models), figsize=(15.4, 4.0), sharey=True, squeeze=False)
+    for ax, (mid, short) in zip(axes[0], models):
+        sub_m = fp[fp.model == mid]
+        for cls in classes:
+            sub = sub_m[sub_m.frame_class == cls]
+            if sub.empty:
+                continue
+            mc = sub.groupby("N")["target_prob"].mean().reindex(NS)
+            denom = mc.reindex(NS_NONZERO).max()
+            ax.plot(NS, (mc / denom).values, marker="o", ms=4.5, lw=1.8,
+                    color=colors[cls], label=labels[cls], zorder=3)
+            pk = int(mc.reindex(NS_NONZERO).idxmax())
+            ax.plot([pk], [mc[pk] / denom], marker="o", ms=7, mfc="white",
+                    mec=colors[cls], mew=1.6, zorder=4)
+        ax.axhline(1.0, ls=":", c="0.6", lw=0.8)
+        ax.set_title(short)
+        ax.set_xlabel("N (target repetitions)")
+        ax.set_xticks([0, 5, 10, 15, 20, 25, 30])
+        ax.grid(True, alpha=0.3)
+        ax.set_ylim(-0.05, 1.08)
+    axes[0][0].set_ylabel("peak-normalised mean $P$(target)")
+    h, l = axes[0][0].get_legend_handles_labels()
+    fig.legend(h, l, loc="lower center", ncol=4, frameon=True, framealpha=0.92,
+               bbox_to_anchor=(0.5, -0.02), fontsize=9.5)
+    fig.tight_layout(rect=[0, 0.07, 1, 1])
+    fig.savefig(FIGS / "fig7_framepragm.png", dpi=160, bbox_inches="tight")
+    fig.savefig(FIGS / "fig7_framepragm.pdf", bbox_inches="tight")
+    plt.close(fig)
+    print(f"  fig7 -> {FIGS / 'fig7_framepragm.png'}")
+
+
 # ===========================================================================
 # CLI
 # ===========================================================================
@@ -548,6 +590,7 @@ FIGURES = {
     "fig4":  fig4_ablation,
     "fig5":  fig5_mechanism,
     "fig6":  fig6_layerwise,
+    "fig7":  fig7_framepragm,
 }
 
 

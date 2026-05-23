@@ -18,7 +18,7 @@ This repository contains the code and reproduction data package for the paper.
 │   ├── notebooks/
 │   │   └── full_paper_pipeline.ipynb   — main reproduction notebook (both panels)
 │   └── src/
-│       └── make_figures.py    — regenerates the four data-driven figures
+│       └── make_figures.py    — regenerates the five data-driven figures
 └── data/
     ├── english_panel/         (13-model English panel)
     │   ├── targets/           per-model target word lists
@@ -28,18 +28,20 @@ This repository contains the code and reproduction data package for the paper.
     │   ├── mechanism/         attention + slot-state (4 models)
     │   ├── layerwise/         per-layer attention (4 models)
     │   ├── application/       LAMA-style pilot (4 models)
+    │   ├── frame_pragmatics/  frame-pragmatics ablation (4 models)
     │   └── summary/           aggregated parquet/CSV + run logs
     ├── multilingual_panel/    (4-model × 4-language panel)
     │   ├── targets/
     │   ├── displaced/
     │   └── summary/
-    └── figures/               (six paper figures — 5 regenerated + 1 static)
+    └── figures/               (seven paper figures — 6 regenerated + 1 static)
         ├── fig1_probe_schematic.{pdf,svg}              (static, hand-authored)
         ├── fig2_main_curves.{pdf,png}
         ├── fig3_crosslingual.{pdf,png}
         ├── fig4_ablation.{pdf,png}
         ├── fig5_mechanism.{pdf,png}
-        └── fig6_layerwise.{pdf,png}
+        ├── fig6_layerwise.{pdf,png}
+        └── fig7_framepragm.{pdf,png}
 ```
 
 ---
@@ -49,6 +51,7 @@ This repository contains the code and reproduction data package for the paper.
 Thirteen open-access checkpoints (2 MLMs + 11 CLMs, 0.5B–14B) are evaluated with a **two-probe diagnostic** that contrasts a displaced repetition probe (F0–F4) against an adjacent baseline. The diagnostic isolates the contribution of *repeated lexical exposure* per se from local-recency / adjacent-token effects.
 
 - **English panel.** Across 13 models, the displaced-probe curve falls monotonically as F grows — more becomes less. The drop is attested in every model and survives a six-condition ablation that controls for surface lexical overlap, sentence length, and item identity.
+- **Frame-pragmatics control.** On the four mechanism models, holding the displaced slot and the repeated block fixed and varying only the frame's pragmatic class (topic-introducer / neutral / anaphoric / novelty) leaves the inverted-U intact in all 16 (model, class) cells — anaphoric frames that *demand* the repeated word still invert, and novelty frames are the largest-drop class in none — so the effect is not an artifact of the readout frame's pragmatics.
 - **Mechanism (§ §5).** On four mechanism models (ModernBERT-large, Qwen2.5-1.5B, Qwen2.5-7B, OLMo-2-7B), per-target-token attention and slot-state probes localize the effect to a small mid-block budget pool whose layer-wise profile tracks a 1/N reference.
 - **Cross-lingual generalization.** Four multilingual checkpoints (XLM-R-base, XLM-R-large, Qwen2.5-1.5B, Qwen2.5-7B) × four languages (Spanish, Chinese, German, French) replicate the displaced-probe decline in 14 of 15 (model, language) cells (XLM-R Chinese drops out because no single-token Chinese candidate survives the BPE filter).
 
@@ -73,7 +76,7 @@ The notebook is restartable: each (model, panel) cell skips work whose output is
 ```bash
 make -C code figures
 # or, directly:
-python code/src/make_figures.py             # regenerate the four data-driven figures
+python code/src/make_figures.py             # regenerate the five data-driven figures
 python code/src/make_figures.py fig2 fig3   # subset
 ```
 
